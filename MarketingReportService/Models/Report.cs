@@ -26,35 +26,11 @@ namespace MarketingReportService
 
         public void Build(String customerName, MarketingFrequency marketingFrequencyChoice)
         {
-            if (marketingFrequencyChoice.Never == true)
+            foreach (DateTime d in reportDictionary.Keys)
             {
-                return;
-            }
-            else if (marketingFrequencyChoice.Always == true)
-            {
-                foreach (List<string> names in reportDictionary.Values)
+                if (marketingFrequencyChoice.IsPreferedDay(d))
                 {
-                    names.Add(customerName);
-                }
-            }
-            else if (marketingFrequencyChoice.DayInWeek != null)
-            {
-                foreach (DateTime d in reportDictionary.Keys)
-                {
-                    if (marketingFrequencyChoice.DayInWeek.Any<DayOfWeek>(x => x == d.DayOfWeek))
-                    {
-                        reportDictionary[d].Add(customerName);
-                    }
-                }
-            }
-            else if (marketingFrequencyChoice.DayOfMonth != null)
-            {
-                foreach (DateTime d in reportDictionary.Keys)
-                {
-                    if (marketingFrequencyChoice.DayOfMonth == d.Day)
-                    {
-                        reportDictionary[d].Add(customerName);
-                    }
+                    reportDictionary[d].Add(customerName);
                 }
             }
         }
